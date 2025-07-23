@@ -1,0 +1,81 @@
+schema: '2.0'
+stages:
+  download:
+    cmd: python -m src.data.data_loader
+    outs:
+    - path: data/raw/housing.csv
+      hash: md5
+      md5: 926e9da0bad793e03c119a4f5809f65c
+      size: 1423529
+  process:
+    cmd: python -m src.data.split_dataset
+    deps:
+    - path: data/raw/housing.csv
+      hash: md5
+      md5: 926e9da0bad793e03c119a4f5809f65c
+      size: 1423529
+    outs:
+    - path: data/processed/test.parquet
+      hash: md5
+      md5: 7b27b4e61c311282b01c260b907fa9d6
+      size: 123955
+    - path: data/processed/train.parquet
+      hash: md5
+      md5: c4c63f84735a2809cd2da86e6401507a
+      size: 358496
+  features:
+    cmd: python -m src.features.build_features
+    deps:
+    - path: data/processed/test.parquet
+      hash: md5
+      md5: 7b27b4e61c311282b01c260b907fa9d6
+      size: 123955
+    - path: data/processed/train.parquet
+      hash: md5
+      md5: c4c63f84735a2809cd2da86e6401507a
+      size: 358496
+    - path: src/features/build_features.py
+      hash: md5
+      md5: bc738f45b8713f49a42825b79c097bae
+      size: 4309
+    - path: src/features/custom.py
+      hash: md5
+      md5: 3d08c45ea5bf68a76dbab328424838cb
+      size: 1601
+    outs:
+    - path: data/processed/preprocess.joblib
+      hash: md5
+      md5: b68f8d8157066431c2dc918394665731
+      size: 74146
+    - path: data/processed/test_features.joblib
+      hash: md5
+      md5: 3af0c3720ccafd43b2cfdd990213ce43
+      size: 825891
+    - path: data/processed/train_features.joblib
+      hash: md5
+      md5: e01be5a542b3c2837156410c2f94ab02
+      size: 3302691
+  train:
+    cmd: python -m src.models.train_model
+    deps:
+    - path: data/processed/test_features.joblib
+      hash: md5
+      md5: 3af0c3720ccafd43b2cfdd990213ce43
+      size: 825891
+    - path: data/processed/train_features.joblib
+      hash: md5
+      md5: e01be5a542b3c2837156410c2f94ab02
+      size: 3302691
+    outs:
+    - path: data/models/metrics.json
+      hash: md5
+      md5: 61c668ccdf9b44e1479bce194a85edcf
+      size: 486
+    - path: data/models/model.pkl
+      hash: md5
+      md5: ebdd4975392997042596b25b007559b8
+      size: 21741441
+    - path: reports/model_ranking.json
+      hash: md5
+      md5: e64ed0788b9c91c9ab5f6adcb924af95
+      size: 1796

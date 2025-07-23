@@ -1,0 +1,36 @@
+stages:
+  download:
+    cmd: python -m src.data.data_loader          # ← cambio
+    outs:
+      - data/raw/housing.csv
+
+  process:
+    cmd: python -m src.data.split_dataset        # ← cambio
+    deps:
+      - data/raw/housing.csv
+    outs:
+      - data/processed/train.parquet
+      - data/processed/test.parquet
+
+  features:
+    cmd: python -m src.features.build_features   # ← cambio
+    deps:
+      - data/processed/train.parquet
+      - data/processed/test.parquet
+      - src/features/build_features.py     # ← añade
+      - src/features/custom.py    
+    outs:
+      - data/processed/train_features.joblib
+      - data/processed/test_features.joblib
+      - data/processed/preprocess.joblib
+
+  train:
+    cmd: python -m src.models.train_model        # ← cambio
+    deps:
+      - data/processed/train_features.joblib
+      - data/processed/test_features.joblib
+    outs:
+      - data/models/model.pkl
+      - data/models/metrics.json
+      - reports/model_ranking.json
+
