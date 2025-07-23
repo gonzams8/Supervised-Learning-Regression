@@ -206,3 +206,14 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 california_housing_model.pkl
+
+# DVC
+.dvc/tmp/
+.dvc/cache/
+data/
+logs/
+reports/
+
+# MLflow local artifacts
+mlruns/
+mlruns.db

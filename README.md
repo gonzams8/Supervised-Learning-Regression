@@ -1,33 +1,102 @@
-# Supervised Learning - Regression
+# 🏡 California Housing - Production ML Pipeline
 
-A collection of supervised machine learning exercises and projects. Here you’ll find step-by-step implementations and example code organized by chapter and source.
+This project is a **production-ready regression pipeline** inspired by Chapter 2 of *"Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow"* by Aurélien Géron.
 
----
-
-## 📖 Description
-
-This repository brings together various supervised learning projects aimed at:
-
-- Implementing code from scratch for hands-on learning.  
-- Understanding key concepts through guided examples.  
-- Promoting code reusability for future projects.
+While the book provides an excellent educational walkthrough, this version is **restructured and enhanced** to follow **real-world practices** including modularization, version control, experiment tracking, testing, and reproducibility.
 
 ---
 
-## 🎯 Sources and Credits
+## 🚀 Objectives
 
-Material in this repository comes from several sources. New entries will be added as you integrate more chapters or resources.
+- Predict housing prices using the classic California Housing dataset.
+- Showcase how a simple regression problem can be scaled into a **clean, production-grade pipeline**.
+- Use modern tools such as:
+  - **DVC** for data and pipeline versioning.
+  - **MLflow** for model tracking and experiment logging.
+  - **Pytest** for testing.
+  - **Scikit-learn** for modeling and preprocessing.
 
-1. **Chapter 2: “End-to-End Machine Learning Project”**  
-   - **Book:** *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow*  
-     Aurélien Géron (O’Reilly, 2019)  
-   - Code has been rewritten from scratch for educational purposes.  
-   - Dataset obtained from the book’s companion materials.
+---
 
-2. *(Coming soon)* 
+## 🧱 Project Structure
 
-## 📜 License
+```bash
+.
+├── data/                   # Raw and processed data
+├── models/                 # Trained models and artefacts
+├── reports/                # Metrics, plots, logs
+├── src/
+│   ├── data/               # Data loading and splitting
+│   ├── features/           # Feature engineering
+│   ├── models/             # Model training and evaluation
+│   ├── utils/              # Logging and helper functions
+├── tests/                  # Unit tests with pytest
+├── dvc.yaml                # DVC pipeline definition
+├── dvc.lock                # DVC stage versions
+├── main.py                 # Entry point (run full pipeline)
+├── requirements.txt
+└── README.md
+```
 
-This project is licensed under the MIT License.
+---
 
+## 📂 How to Run
 
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/gonzams8/california-housing-prod-pipeline.git
+cd california-housing-prod-pipeline
+```
+
+### 2. Create a virtual environment
+
+```bash
+python -m venv .venv
+source .venv/bin/activate  # On Linux/macOS
+.venv\Scripts\activate     # On Windows
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the pipeline with DVC
+
+```bash
+dvc repro --force
+```
+
+### 5. Track experiments with MLflow
+
+```bash
+mlflow ui
+# Then open http://localhost:5000 in your browser
+```
+
+---
+
+## 🧪 Running Tests
+
+```bash
+pytest
+```
+
+---
+
+## 📌 Notes
+
+- This pipeline can be extended to include hyperparameter tuning, deployment, and monitoring.
+- The dataset is retrieved from a remote GitHub location in the current version.
+- You can freely modify `src/models/train_model.py` to test different algorithms.
+
+---
+
+## 📘 References
+
+- Aurélien Géron - *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow*
+- https://mlflow.org/
+- https://dvc.org/
+- https://scikit-learn.org/

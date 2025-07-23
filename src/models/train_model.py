@@ -206,7 +206,11 @@ def main() -> None:
                 "rmse_ci_high": rmse_high,
             }
         )
-        mlflow.sklearn.log_model(best_estimator, artifact_path="model")
+        mlflow.sklearn.log_model(
+            best_estimator, 
+            name="model",
+            input_example=X_test_df.iloc[:1]
+        )
 
     # -------------------- Persistencia ------------------------------- #
     joblib.dump(best_estimator, MODEL_DIR / "model.pkl")
